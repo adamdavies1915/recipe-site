@@ -5,7 +5,9 @@ import { RecipeModel } from "./models"
 
 const createRecipes = async (): Promise<void> => {
   try {
-    await RecipeModel.insertMany(builtRecipes)
+    await RecipeModel.insertMany(builtRecipes).then((output) => {
+      console.log("Recipes created", output)
+    })
   } catch (err) {
     console.log("Creation Issue: ", err)
   }
