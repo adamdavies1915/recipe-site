@@ -12,6 +12,7 @@ import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import * as actions from "../../actions"
+import Recipe from "../Recipe"
 
 const ingredientList = ["flour", "sugar", "salt", "butter", "milk"]
 
@@ -23,11 +24,12 @@ class Home extends Component {
     this.fetchSearch = this.fetchSearch.bind(this)
     this.state = {
       term: "",
-      ingredients: ["milk"],
+      ingredients: [],
+      clickedRecipe: null,
     }
   }
   fetchSearch() {
-    // TODO: something is missing here for fetching
+    this.props.searchRecipes(this.state.term, this.state.ingredients)
   }
   handleSearch(event) {
     const term = event.target.value
@@ -42,6 +44,9 @@ class Home extends Component {
       ingredients.splice(foundIngredient, 1)
     }
     this.setState({ ingredients })
+  }
+  handleClickedRecipe(recipeId) {
+    this.props.fetchRecipe(recipeId)
   }
   render() {
     const { term, ingredients } = this.state
@@ -75,7 +80,7 @@ class Home extends Component {
         {recipes && (
           <List>
             {recipes.map((recipe) => (
-              <ListItem key={recipe.id}>
+              <ListItem key={recipe.id} onClick={() => this.handleClickedRecipe(recipe.id)}>
                 <ListItemText primary={recipe.name} />
               </ListItem>
             ))}
@@ -83,11 +88,7 @@ class Home extends Component {
         )}
         {isLoading && <LinearProgress />}
         <Divider />
-        {/*
-          TODO: Add a recipe component here.
-          I'm expecting you to have it return null or a component based on the redux state, not passing any props from here
-          I want to see how you wire up a component with connect and build actions.
-        */}
+        <Recipe />
       </HomeWrapper>
     )
   }
@@ -102,6 +103,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       searchRecipes: actions.searchRecipes,
+      fetchRecipe: actions.fetchRecipe,
     },
     dispatch
   )
