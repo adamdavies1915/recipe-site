@@ -40,3 +40,10 @@ head to the `RUN` tab (the play button w/ a bug) and select `debug` and hit play
 1. containerize the application
 1. add deployments using heroku, digital ocean, etc...
 1. add integration tests using puppeteer, webdriver, playwright, etc...
+
+## Assumptions and Decisions
+
+- 95% of my time on this project was in the frontend, A lot of time was spent familiarising myself with class based react components as I've been working in a code base with only functional for the last couple of years. I am also not used to connect redux architecture, having only used the hooks in the past.
+- I timeboxed switching over the frontend project to be typescript. It hit a snag with the react typings not showing up so left it. Would definitely be an improvement for the app to add types.
+- I also timeboxed converting the react components to be Functional but worked out it would take too much of my 4 hours to convert it.
+- I used HTML elements with styled components as that was mostly out Home was done. I would replace these with Martial UI elements and useStyles.
